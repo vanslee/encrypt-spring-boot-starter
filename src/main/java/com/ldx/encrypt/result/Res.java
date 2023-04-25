@@ -2,10 +2,15 @@ package com.ldx.encrypt.result;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Res<T> {
+/**
+ * @author Uaena
+ * @date 2023/4/25 11:10
+ */
+public class Res<T> extends Result<Res<T>,T> {
     private int code;
     private String msg;
     private T data;
+
     @JsonIgnore
     public boolean isSuccess() {
         return code == 200;
@@ -40,11 +45,7 @@ public class Res<T> {
                 .setMsg(String.format(error, format));
     }
 
-    public static <T> Res<T> error(ServiceException e) {
-        return new Res<T>()
-                .setCode(e.getCode())
-                .setMsg(e.getMessage());
-    }
+
 
     public static <T> Res<T> error(Exception e) {
         return new Res<T>()
